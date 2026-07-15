@@ -1,5 +1,7 @@
 (function () {
-  const config = window.APP_CONFIG || {};
+  const configLoaded =
+    typeof window.APP_CONFIG === "object" && window.APP_CONFIG !== null;
+  const config = configLoaded ? window.APP_CONFIG : {};
   const placeholders = document.querySelectorAll("[data-config]");
 
   placeholders.forEach((node) => {
@@ -223,6 +225,10 @@
     try {
       let result = null;
 
+      if (!configLoaded) {
+        throw new Error("Falta config.js en el despliegue.");
+      }
+
       switch (config.submitMode) {
         case "custom-endpoint":
           if (!config.waitlistEndpoint) {
@@ -237,9 +243,10 @@
           result = await submitToSupabaseRest(payload);
           break;
         case "mock":
-        default:
           await new Promise((resolve) => window.setTimeout(resolve, 500));
           break;
+        default:
+          throw new Error("submitMode no valido o no configurado.");
       }
 
       showSuccess(email, result && result.id ? result.id : "");
