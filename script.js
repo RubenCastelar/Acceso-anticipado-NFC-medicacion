@@ -155,15 +155,14 @@
           "Content-Type": "application/json",
           apikey: supabaseAnonKey,
           Authorization: "Bearer " + supabaseAnonKey,
-          Prefer: "return=representation"
+          Prefer: "return=minimal"
         },
         body: JSON.stringify([payload])
       }
     );
 
     if (response.ok) {
-      const insertedRows = await response.json();
-      return Array.isArray(insertedRows) ? insertedRows[0] : insertedRows;
+      return null;
     }
 
     let errorMessage = "No se pudo guardar el email.";
