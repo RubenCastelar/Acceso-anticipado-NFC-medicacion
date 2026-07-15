@@ -1,7 +1,24 @@
 (function () {
+  const publicDefaults = {
+    companyName: "TU NOMBRE O EMPRESA",
+    legalName: "TU DENOMINACION LEGAL",
+    taxId: "TU NIF/CIF",
+    address: "TU DOMICILIO SOCIAL O PROFESIONAL",
+    contactEmail: "rubencastelarcontacto@gmail.com",
+    privacyEmail: "rubencastelarcontacto@gmail.com",
+    domain: "",
+    lastUpdated: "15 de julio de 2026",
+    submitMode: "supabase-rest",
+    waitlistEndpoint: "",
+    supabaseUrl: "https://vtxbbweqcjsorscsucah.supabase.co",
+    supabaseAnonKey: "sb_publishable_XDCs2O3ipaCZ1CzyxQTnCw_k_wzct15",
+    supabaseTable: "waitlist_leads"
+  };
   const configLoaded =
     typeof window.APP_CONFIG === "object" && window.APP_CONFIG !== null;
-  const config = configLoaded ? window.APP_CONFIG : {};
+  const config = configLoaded
+    ? { ...publicDefaults, ...window.APP_CONFIG }
+    : publicDefaults;
   const placeholders = document.querySelectorAll("[data-config]");
 
   placeholders.forEach((node) => {
@@ -223,10 +240,6 @@
 
     try {
       let result = null;
-
-      if (!configLoaded) {
-        throw new Error("Falta config.js en el despliegue.");
-      }
 
       switch (config.submitMode) {
         case "custom-endpoint":
