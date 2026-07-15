@@ -210,6 +210,7 @@
     const email = String(formData.get("email") || "").trim().toLowerCase();
     const honeypot = String(formData.get("company") || "").trim();
     const consent = formData.get("consent") === "on";
+    const newsletter = formData.get("newsletter") === "on";
 
     if (honeypot) {
       showSuccess(email || "Tu correo");
@@ -229,7 +230,7 @@
     const payload = {
       email,
       consent_launch: true,
-      consent_updates: false,
+      consent_updates: newsletter,
       source: "landing-nfcuidado",
       locale: document.documentElement.lang || "es",
       created_at: new Date().toISOString()
