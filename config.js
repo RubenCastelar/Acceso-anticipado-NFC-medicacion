@@ -1,8 +1,8 @@
 window.APP_CONFIG = {
-  companyName: "TU NOMBRE O EMPRESA",
-  legalName: "TU DENOMINACION LEGAL",
-  taxId: "TU NIF/CIF",
-  address: "TU DOMICILIO SOCIAL O PROFESIONAL",
+  companyName: "Rubén Castelar",
+  legalName: "Rubén Castelar",
+  taxId: "73282725X",
+  address: "Astigarragako bidea 3",
   contactEmail: "rubencastelarcontacto@gmail.com",
   privacyEmail: "rubencastelarcontacto@gmail.com",
   domain: "",
