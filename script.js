@@ -116,9 +116,12 @@
     feedback.className = "form-feedback" + (type ? " " + type : "");
   };
 
-  const showSuccess = (email) => {
+  const showSuccess = (email, insertedId) => {
     setFeedback(
-      "Gracias. " + email + " ya ha quedado registrado en la lista de espera.",
+      "Gracias. " +
+        email +
+        " ya ha quedado registrado en la lista de espera." +
+        (insertedId ? " ID: " + insertedId : ""),
       "success"
     );
     form.reset();
@@ -136,6 +139,8 @@
     if (!response.ok) {
       throw new Error("No se pudo enviar el formulario.");
     }
+
+    return null;
   };
 
   const submitToSupabaseRest = async (payload) => {
@@ -148,13 +153,16 @@
           "Content-Type": "application/json",
           apikey: supabaseAnonKey,
           Authorization: "Bearer " + supabaseAnonKey,
-          Prefer: "return=minimal"
+          Prefer: "return=representation"
         },
         body: JSON.stringify([payload])
       }
     );
 
-    if (response.ok) return;
+    if (response.ok) {
+      const insertedRows = await response.json();
+      return Array.isArray(insertedRows) ? insertedRows[0] : insertedRows;
+    }
 
     let errorMessage = "No se pudo guardar el email.";
     const rawText = await response.text();
@@ -213,18 +221,20 @@
     button.textContent = "Enviando...";
 
     try {
+      let result = null;
+
       switch (config.submitMode) {
         case "custom-endpoint":
           if (!config.waitlistEndpoint) {
             throw new Error("Falta configurar waitlistEndpoint.");
           }
-          await submitToCustomEndpoint(payload);
+          result = await submitToCustomEndpoint(payload);
           break;
         case "supabase-rest":
           if (!config.supabaseUrl || !config.supabaseAnonKey) {
             throw new Error("Falta configurar Supabase.");
           }
-          await submitToSupabaseRest(payload);
+          result = await submitToSupabaseRest(payload);
           break;
         case "mock":
         default:
@@ -232,7 +242,7 @@
           break;
       }
 
-      showSuccess(email);
+      showSuccess(email, result && result.id ? result.id : "");
     } catch (error) {
       setFeedback(
         error instanceof Error ? error.message : "Ha ocurrido un error.",
