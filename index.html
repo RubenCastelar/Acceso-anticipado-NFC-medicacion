@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NFCuidado | Lista de espera</title>
+    <meta
+      name="description"
+      content="Apuntate para recibir el lanzamiento oficial de NFCuidado, la app NFC pensada para ayudar a las familias a seguir la toma de medicacion."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas class="background-particles" id="background-particles" aria-hidden="true"></canvas>
+    <main class="minimal-shell">
+      <section class="minimal-card" id="inicio">
+        <h1>Construyendo una forma mas simple de cuidar.</h1>
+
+        <div class="progress-block" aria-label="Estado de lanzamiento">
+          <div class="progress-meta">
+            <span>Progreso del lanzamiento</span>
+            <strong>60%</strong>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+
+        <form id="waitlist-form" class="minimal-form" novalidate>
+          <label class="email-label" for="email">Deja tu correo</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="Escribe tu correo aqui"
+            required
+            aria-label="Correo electronico"
+          />
+
+          <input
+            class="honeypot"
+            type="text"
+            name="company"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+
+          <button type="submit" class="cta">Avisadme</button>
+
+          <label class="minimal-checkbox">
+            <input type="checkbox" id="consent" name="consent" required />
+            <span>
+              Acepto la
+              <a href="./privacidad.html" target="_blank" rel="noreferrer">Politica de Privacidad</a>
+              para recibir el aviso de lanzamiento.
+            </span>
+          </label>
+
+          <p class="microcopy">
+            Tambien tienes
+            <a href="./aviso-legal.html">Aviso Legal</a>
+            y
+            <a href="./cookies.html">Politica de Cookies</a>.
+          </p>
+          <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
